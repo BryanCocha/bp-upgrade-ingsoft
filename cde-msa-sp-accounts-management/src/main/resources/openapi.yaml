@@ -1,0 +1,824 @@
+openapi: 3.0.3
+info:
+  title: API Gestión de Cuentas
+  description: |
+    <sup>(ES)</sup> Microservicio para gestión de Personas, Clientes, Cuentas y Movimientos.<br>
+    <sup>(EN)</sup> Microservice has the capacity of management Persons, Customs, Accounts and Movements.<br><br><br>
+    <b>• &aacute;rea de Negocio<small>¦ Business Area </small>:</b> `Sales and Services`<br><br>
+    <b>• Dominio de Negocio<small>¦ Business Support </small>:</b> `Servicing`<br><br>
+    <b>• Dominio de Servicio<small>¦ Service Support </small>:</b> `Servicing account`<br><br><br>
+    <b> Bit&aacute;cora de Cambios del template </b> <br>
+    - OpenApi. Response Error <br>
+  contact:
+    name: Chapter de Desarrollo
+    email: bcochaba@pichincha.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: Accounts Management
+    description: |
+      <sup><i>(ES)</i></sup> El dominio de servicio gestiona Personas, Clientes, Cuentas y Movimientos.<br><br>
+      <sup><i>(EN)</i></sup> The service domain handles the processing of Persons, Customs, Accounts and Transaction.
+paths:
+  /accounts:
+    get:
+      summary: "Obtiene cuentas."
+      operationId: GetAccounts
+      parameters:
+        - name: accountNumber
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de cuentas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    post:
+      summary: "Crea una cuenta."
+      operationId: CreateAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Cuenta creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    put:
+      summary: "Actualiza una cuenta específica."
+      operationId: UpdateAccountByNumber
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Cuenta actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    patch:
+      summary: "Edita parcialmente una cuenta específica."
+      operationId: PatchAccountByNumber
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Cuenta modificada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    delete:
+      summary: "Elimina una cuenta específica."
+      operationId: DeleteAccountByNumber
+      parameters:
+        - name: accountNumber
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cuenta eliminada
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+  /customers:
+    post:
+      summary: "⁽ᴱˢ⁾ Crea un cliente. ⁽ᴱᴺ⁾ Create a client."
+      operationId: CreateCustomer
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Cliente creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    get:
+      summary: "Obtiene un cliente por su identificador único."
+      operationId: GetCustomerById
+      parameters:
+        - name: identification
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    put:
+      summary: "Actualiza un cliente específico."
+      operationId: UpdateCustomerById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Cliente actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    patch:
+      summary: "Edita parcialmente un cliente específico."
+      operationId: PatchCustomerById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Cliente modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    delete:
+      summary: "Elimina un cliente específico."
+      operationId: DeleteCustomerById
+      parameters:
+        - name: identification
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cliente eliminado
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+  /transactions:
+    post:
+      summary: "⁽ᴱˢ⁾ Crea un movimiento. ⁽ᴱᴺ⁾ Create a transaction."
+      operationId: CreateTransaction
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '201':
+          description: Movimiento creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    get:
+      summary: "Obtiene un movimiento por su identificador único."
+      operationId: GetTransactionById
+      parameters:
+        - name: idMgmtAccount
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: transactionDate
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movimiento encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    put:
+      summary: "Actualiza un movimiento específico."
+      operationId: UpdateTransactionById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '200':
+          description: Movimiento actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    patch:
+      summary: "Edita parcialmente un movimiento específico."
+      operationId: PatchTransactionById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '200':
+          description: Movimiento modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+    delete:
+      summary: "Elimina un movimiento específico."
+      operationId: DeleteTransactionById
+      parameters:
+        - name: transactionId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction eliminado
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+  /reports:
+    get:
+      summary: "Genera un reporte de movimientos para un cliente en un rango de fechas."
+      operationId: GetTransactionReport
+      parameters:
+        - name: identification
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: transactionDate
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte generado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Report'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+  /reports/pdf:
+    get:
+      summary: "Genera un reporte en PDF de movimientos para un cliente en un rango de fechas."
+      operationId: GetTransactionReportPdf
+      parameters:
+        - name: identification
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: transactionDate
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte PDF generado
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único de la persona
+        name:
+          type: string
+        gender:
+          type: string
+        age:
+          type: integer
+        identification:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+      required:
+        - name
+        - gender
+        - age
+        - identification
+        - address
+        - phone
+    Customer:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+        - type: object
+          properties:
+            mgmtCustomerId:
+              type: string
+              description: Identificador único del cliente en el sistema de gestión
+            customerId:
+              type: string
+              description: Identificador único del cliente
+            password:
+              type: string
+            state:
+              type: boolean
+          required:
+            - password
+            - state
+    Account:
+      type: object
+      properties:
+        idAccount:
+          type: string
+          description: Identificador único de la cuenta
+        accountNumber:
+          type: string
+          description: Número único de la cuenta
+        accountType:
+          type: string
+        initialBalance:
+          type: number
+        state:
+          type: boolean
+        idMgmtCustomer:
+          type: string
+      required:
+        - accountNumber
+        - accountType
+        - initialBalance
+        - state
+        - idMgmtCustomer
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Identificador único del movimiento
+        transactionDate:
+          type: string
+          format: date
+        transactionType:
+          type: string
+          description: "Crédito (positivo) o Débito (negativo). Si el saldo es cero y se intenta débito, retorna 'Saldo no disponible'."
+        amount:
+          type: number
+        balance:
+          type: number
+        idMgmtAccount:
+          type: string
+      required:
+        - typeTransaction
+        - amount
+        - idMgmtAccount
+    Report:
+      type: object
+      properties:
+        transactionDate:
+          type: string
+          format: date
+        name:
+          type: string
+        accountNumber:
+          type: string
+          description: Número único de la cuenta
+        transactionType:
+          type: string
+          description: "Crédito (positivo) o Débito (negativo). Si el saldo es cero y se intenta débito, retorna 'Saldo no disponible'."
+        balance:
+          type: number
+        state:
+          type: boolean
+        amount:
+          type: number
+    ErrorModel:
+      required:
+        - detail
+        - instance
+        - title
+        - type
+      type: object
+      properties:
+        title:
+          maximum: 50
+          type: string
+          description: Mensaje de error técnico.
+          example: Internal Server.
+        detail:
+          maximum: 50
+          type: string
+          description: Mensaje a presentar al cliente, o error a detalle del evento
+          example: "Se produjo un error interno, lo estamos revisando."
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorList"
+        instance:
+          maximum: 50
+          type: string
+          description: Código de catálogo de errores o referencia URI.
+          example: "0188"
+        type:
+          maximum: 100
+          type: string
+          description: Referencia URI que identifica el tipo de problema.
+          example: /v1/name/pathSuffix
+        resource:
+          type: string
+          description: Recurso, Clase u objeto donde se generó el error.
+          example: UMPClientes0020/ConsultaInformacionCliente01
+        component:
+          type: string
+          description: Componente de la aplicación o transacción.
+          example: TX067050
+        backend:
+          type: string
+          description: Código backend.
+          example: "00045"
+    ErrorList:
+      properties:
+        code:
+          type: string
+          description: Código de catálogo de errores.
+          example: "001"
+        message:
+          type: string
+          description: Mensaje de error técnico.
+          example: Bad Request
+        businessMessage:
+          type: string
+          description: Mensaje de negocio.
+          example: The xyz field is mandatory
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    NotFound:
+      description: Not Found
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    Conflict:
+      description: Conflict
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    TooManyRequests:
+      description: Too Many Requests
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    GatewayTimeout:
+      description: Gateway Timeout
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"
+    MethodNotAllowed:
+      description: Method Not Allowed
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/ErrorModel"

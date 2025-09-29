@@ -1,0 +1,167 @@
+methodArgumentNotValidException:
+  statusCode: '400'
+  title: Your request parameters didn't validate.
+  detail: Invalid request content.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+missingRequestHeaderException:
+  statusCode: '400'
+  title: Your request parameters didn't validate.
+  detail: Missing required headers.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+httpMessageNotReadableException:
+  statusCode: '400'
+  title: Your request parameters didn't validate.
+  detail: Invalid request content.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+badRequestException:
+  statusCode: '400'
+  title: Your request parameters didn't validate.
+  detail: Invalid request content.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+    - code: '400'
+      message: Bad Request
+      businessMessage: Invalid request content.
+unauthorizedException:
+  statusCode: '401'
+  title: Unauthorized.
+  detail: Unauthorized to this service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+forbiddenException:
+  statusCode: '403'
+  title: Forbidden.
+  detail: Access is permanently prohibited.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+notFoundException:
+  statusCode: '404'
+  title: Resource not found.
+  detail: Resource not found in the service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+    - code: '404'
+      message:
+      businessMessage: Not found
+methodNotAllowedException:
+  statusCode: '405'
+  title: Method Not Allowed.
+  detail: Method not allowed for this service.
+  type: ERROR
+  resource: MethodNotAllowedException
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance: '/Status'
+  errors:
+    - code: '405'
+      message: Method not allowed
+      businessMessage: Method not allowed
+DefaultHandlerExceptionResolver:
+  statusCode: '405'
+  title: Internal error.
+  detail: Internal server error in service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+ClientErrorConflictException:
+  statusCode: '409'
+  title: Internal error.
+  detail: Internal server error in service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+    - code: '409'
+      message:
+      businessMessage: Creation not permitted
+notParameterizedException:
+  statusCode: '500'
+  title: Internal error.
+  detail: Internal error in service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+internalServerException:
+  statusCode: '500'
+  title: Internal error.
+  detail: Internal server error in service.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+connectExceptionClient:
+  statusCode: '500'
+  title: Connection refused.
+  detail: The server is not ready to handle the request.
+  type:
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+OkMessage:
+  title: Successfully
+  detail: create.
+  type: INFO
+  resource: /create
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+    - code: '200'
+      message: OK
+      businessMessage: Successfully
+defaultException:
+  statusCode: '503'
+  title: Internal error.
+  detail: Internal server error in service.
+  type: FATAL
+  resource:
+  backend: '00674'
+  component: cde-msa-sp-accounts-management
+  instance:
+  errors:
+    - code: '503'
+      message:
+      businessMessage: Service Unavailable

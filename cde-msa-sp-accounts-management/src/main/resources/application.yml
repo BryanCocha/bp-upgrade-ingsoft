@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: cde-msa-sp-accounts-management
+  header:
+    channel: digital
+    medium: web
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${INX_POSTGRESQL_HOST:localhost}:${INX_POSTGRESQL_PORT:5432}/${INX_POSTGRESQL_NAME:bdd_internexo}
+    username: ${INX_POSTGRESQL_USERNAME:postgres}
+    password: ${INX_POSTGRESQL_PASSWORD:Policristian1}
+    hikari:
+      schema: ${INX_POSTGRESQL_SCHEMA:public}
+      connection-init-sql: ${INX_POSTGRESQL_CONNECTION_INIT:select 1}
+      connection-timeout: ${INX_POSTGRESQL_CONNECTION_TIMEOUT:3000}
+      minimum-idle: ${INX_POSTGRESQL_MINIMUN_IDLE:20}
+      maximum-pool-size: ${INX_POSTGRESQL_POOL_SIZE:100}
+      idle-timeout: ${INX_POSTGRESQL_IDLE_TIMEOUT:20000}
+      max-lifetime: ${INX_POSTGRESQL_LIFETIME:3000}
+      auto-commit: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: false

@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: front
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: ./cde-msa-sp-accounts-management
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/banco
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_DB: banco
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./cde-msa-sp-accounts-management/src/main/resources/db/scripts:/docker-entrypoint-initdb.d
