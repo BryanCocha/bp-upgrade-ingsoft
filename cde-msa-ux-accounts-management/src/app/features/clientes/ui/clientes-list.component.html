@@ -1,0 +1,71 @@
+<div class="clientes-list">
+  <h2>Clientes</h2>
+  <div style="margin-bottom:1rem;">
+  <input type="text" placeholder="Buscar por identificación" [(ngModel)]="busqueda" />
+  <button (click)="buscarCliente()">Buscar</button>
+  <button (click)="cargarTodosClientes()">Cargar todos</button>
+  </div>
+
+  <!-- Formulario para crear nuevo cliente -->
+  <div style="margin-bottom:1rem;">
+    <h3>Nuevo Cliente</h3>
+  <input type="text" placeholder="Nombre" [(ngModel)]="nuevoCliente.name" />
+  <input type="text" placeholder="Género" [(ngModel)]="nuevoCliente.gender" />
+  <input type="number" placeholder="Edad" [(ngModel)]="nuevoCliente.age" />
+  <input type="text" placeholder="Identificación" [(ngModel)]="nuevoCliente.identification" />
+  <input type="text" placeholder="Dirección" [(ngModel)]="nuevoCliente.address" />
+  <input type="text" placeholder="Teléfono" [(ngModel)]="nuevoCliente.phone" />
+  <input type="password" placeholder="Contraseña" [(ngModel)]="nuevoCliente.password" />
+  <label><input type="checkbox" [(ngModel)]="nuevoCliente.state" /> Activo</label>
+    <button (click)="crearCliente()" class="nuevo">Crear</button>
+  </div>
+
+  <!-- Formulario para editar cliente -->
+  <div *ngIf="editando" style="margin-bottom:1rem;">
+    <h3>Editar Cliente</h3>
+  <input type="text" placeholder="Nombre" [(ngModel)]="clienteEditando.name" />
+  <input type="text" placeholder="Género" [(ngModel)]="clienteEditando.gender" />
+  <input type="number" placeholder="Edad" [(ngModel)]="clienteEditando.age" />
+  <input type="text" placeholder="Identificación" [(ngModel)]="clienteEditando.identification" />
+  <input type="text" placeholder="Dirección" [(ngModel)]="clienteEditando.address" />
+  <input type="text" placeholder="Teléfono" [(ngModel)]="clienteEditando.phone" />
+  <input type="password" placeholder="Contraseña" [(ngModel)]="clienteEditando.password" />
+  <label><input type="checkbox" [(ngModel)]="clienteEditando.state" /> Activo</label>
+    <button (click)="actualizarCliente()">Actualizar</button>
+    <button (click)="cancelarEdicion()">Cancelar</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Edad</th>
+        <th>Identificación</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>CustomerId</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{cliente.id}}</td>
+        <td>{{cliente.name}}</td>
+        <td>{{cliente.gender}}</td>
+        <td>{{cliente.age}}</td>
+        <td>{{cliente.identification}}</td>
+        <td>{{cliente.address}}</td>
+        <td>{{cliente.phone}}</td>
+        <td>{{cliente.customerId}}</td>
+        <td>{{cliente.state ? 'Activo' : 'Inactivo'}}</td>
+        <td>
+          <button (click)="editarCliente(cliente)">Editar</button>
+          <button (click)="eliminarCliente(cliente)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
