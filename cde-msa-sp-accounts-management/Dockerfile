@@ -1,9 +1,13 @@
-ARG IMAGE
-FROM $IMAGE
+# Etapa 1: build
+FROM gradle:7.6.0-jdk17 AS builder
+WORKDIR /app
+COPY . .
+RUN chmod +x gradlew
+RUN ./gradlew clean build -x test
 
-RUN mkdir /opt/build/
-WORKDIR /opt/build/
-COPY ./build/*.txt /opt/build/
-COPY ./build/libs/*.jar /opt/build/
-
-CMD ["/bin/sh", "/opt/build/init.sh"]
+# Etapa 2: runtime
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
