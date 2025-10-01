@@ -1,71 +1,35 @@
-version: "3.9"
-
+version: '3.8'
 services:
-  postgres:
-    image: postgres:15
-    container_name: bp-postgres
-    environment:
-      POSTGRES_DB: bp_accounts_db
-      POSTGRES_USER: bpuser
-      POSTGRES_PASSWORD: bp_password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./cde-msa-sp-accounts-management/src/main/resources/db/scripts:/docker-entrypoint-initdb.d
-    networks:
-      - bp-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bpuser -d bp_accounts_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: bp-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@bp.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-    ports:
-      - "8080:80"
-    depends_on:
-      - postgres
-    networks:
-      - bp-network
-
-  bp-api:
-    build:
-      context: ./cde-msa-sp-accounts-management
-      dockerfile: Dockerfile
-    container_name: bp-accounts-api
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bp_accounts_db
-      SPRING_DATASOURCE_USERNAME: bpuser
-      SPRING_DATASOURCE_PASSWORD: bp_password
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgres
-    networks:
-      - bp-network
-
-  bp-frontend:
+  front:
     build:
       context: ./cde-msa-ux-accounts-management
       dockerfile: Dockerfile
-    container_name: bp-frontend
+    container_name: front
     ports:
-      - "3000:80"
-    networks:
-      - bp-network
+      - "4200:80"
     depends_on:
-      - bp-api
-
-volumes:
-  postgres_data:
-
-networks:
-  bp-network:
-    driver: bridge
+      - backend
+  backend:
+    build:
+      context: ./cde-msa-sp-accounts-management
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/banco
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_DB: banco
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./cde-msa-sp-accounts-management/src/main/resources/db/scripts:/docker-entrypoint-initdb.d
